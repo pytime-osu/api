@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -120,12 +120,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # IBM CLOUD
-DISCOVERY_API_KEY = 'mkK_1ojeA-jwPl5q1r7yqpwiYfplgVetGLilCIiVMaZW'
-DISCOVERY_INSTANCE = 'https://api.us-south.discovery.watson.cloud.ibm.com/' \
-                     'instances/2115987e-0b01-4e2f-a16a-ee2820452b0d'
+DISCOVERY_API_KEY = os.environ.get('DISCOVERY_API_KEY')
+DISCOVERY_SERVICE_URL = os.environ.get('DISCOVERY_SERVICE_URL')
 DISCOVERY_ENVIRONMENT = 'dev'
 DISCOVERY_COLLECTION = 'games'
 
 # TWITCH
-TWITCH_CLIENT_ID = 'in4v04haru11cvk47ur0vvgv71nx79'
-TWITCH_CLIENT_SECRET = 'qmumy0x7sg9uve7lkefg1umlnaqyl2'
+TWITCH_CLIENT_ID = os.environ.get('TWITCH_CLIENT_ID')
+TWITCH_CLIENT_SECRET = os.environ.get('TWITCH_CLIENT_SECRET')
