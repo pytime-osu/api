@@ -10,7 +10,7 @@ class DiscoveryClient:
             version='2019-04-30',
             authenticator=self.authenticator
         )
-        self.client.set_service_url(service_url=settings.DISCOVERY_INSTANCE)
+        self.client.set_service_url(service_url=settings.DISCOVERY_SERVICE_URL)
         self.environment = self.collection = None
 
     def init_environment(self, name):
