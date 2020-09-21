@@ -118,3 +118,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# IBM CLOUD
+DISCOVERY_API_KEY = 'mkK_1ojeA-jwPl5q1r7yqpwiYfplgVetGLilCIiVMaZW'
+DISCOVERY_INSTANCE = 'https://api.us-south.discovery.watson.cloud.ibm.com/' \
+                     'instances/2115987e-0b01-4e2f-a16a-ee2820452b0d'
+DISCOVERY_ENVIRONMENT = 'dev'
+DISCOVERY_COLLECTION = 'games'
+
+# TWITCH
+TWITCH_CLIENT_ID = 'in4v04haru11cvk47ur0vvgv71nx79'
+TWITCH_CLIENT_SECRET = 'qmumy0x7sg9uve7lkefg1umlnaqyl2'
