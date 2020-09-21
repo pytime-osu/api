@@ -2,7 +2,7 @@ asgiref==3.2.10
 certifi==2020.6.20
 chardet==3.0.4
 Django==3.1.1
-djangorestframework==3.1.1
+djangorestframework==3.11.1
 ibm-cloud-sdk-core==3.2.0
 ibm-watson==4.7.1
 idna==2.10
