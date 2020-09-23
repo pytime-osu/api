@@ -21,4 +21,5 @@ from pytime_api import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('rec/', views.rec_list),
+    path('detail/', views.game_detail),
 ]

@@ -15,9 +15,22 @@ def rec_list(request):
         games_list = discovery.query(
             collection_id=settings.DISCOVERY_COLLECTION_ID,
             environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
-            natural_language_query=tag).get_result()['results']
+            natural_language_query=tag)['results']
         results = []
         for game in games_list:
-            results.append({"name": game['name'], "summary": game['summary'], "cover_url": game['cover']['url'], "slug" : game['slug']})
+            results.append({"name": game['name'], "summary": game['summary'], "cover_url": game['cover']['url'],
+                            "slug": game['slug']})
 
         return Response(results)
+
+
+@api_view(['POST'])
+def game_detail(request):
+    if request.method == 'POST':
+        id = request.data['slug']
+        game = discovery.query(
+            collection_id=settings.DISCOVERY_COLLECTION_ID,
+            environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
+            filter="slug::" + id)['results']
+
+        return Response(game)

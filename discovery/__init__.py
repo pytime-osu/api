@@ -47,9 +47,11 @@ class DiscoveryClient:
             file=file,
             filename=filename).get_result()
 
-    def query(self, environment_id, collection_id, natural_language_query):
+    def query(self, environment_id, collection_id, filter=None, natural_language_query=None):
         return self.client.query(
             environment_id=environment_id,
             collection_id=collection_id,
-            natural_language_query=natural_language_query)
+            filter=filter,
+            natural_language_query=natural_language_query).get_result()
+
 
