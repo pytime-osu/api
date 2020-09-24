@@ -11,11 +11,12 @@ discovery = DiscoveryClient()
 @api_view(['POST'])
 def rec_list(request):
     if request.method == 'POST':
-        tag = request.data['tag']
+        tags = "".join(request.data['tag'])
+        print(tags)
         games_list = discovery.query(
             collection_id=settings.DISCOVERY_COLLECTION_ID,
             environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
-            natural_language_query=tag)['results']
+            natural_language_query=tags)['results']
         results = []
         for game in games_list:
             results.append({"name": game['name'], "summary": game['summary'], "cover_url": game['cover']['url'],
