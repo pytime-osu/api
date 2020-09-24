@@ -12,7 +12,6 @@ discovery = DiscoveryClient()
 def rec_list(request):
     if request.method == 'POST':
         tags = "".join(request.data['tag'])
-        print(tags)
         games_list = discovery.query(
             collection_id=settings.DISCOVERY_COLLECTION_ID,
             environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
