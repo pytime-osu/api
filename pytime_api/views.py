@@ -31,6 +31,6 @@ def game_detail(request):
         game = discovery.query(
             collection_id=settings.DISCOVERY_COLLECTION_ID,
             environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
-            filter="slug::" + id)['results']
+            filter="slug::" + id)['results'][0]
 
         return Response(game)
