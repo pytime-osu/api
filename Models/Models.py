@@ -9,8 +9,8 @@ class Suggestions(models.Model):
     content = models.TextField()
 
     def auto_complete(self,request):
-        query = Suggestions.objects.filter(title.startswith(request.REQUEST['search']))
+        query = Suggestions.objects.filter(title.startswith("serachbar entry"))
         res = []
         for result in query:
-            res.append(result.title)
+            res.append(result.content)
         return Response(results)
