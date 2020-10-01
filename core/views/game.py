@@ -13,7 +13,8 @@ class GameViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     @action(detail=False, methods=['POST'])
     def recommendations(self, request):
-        tags = "".join(request.data['tags'])
+        tags = " ".join(request.data['tags'])
+        print(tags)
         games_list = discovery.query(
             collection_id=settings.DISCOVERY_COLLECTION_ID,
             environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
