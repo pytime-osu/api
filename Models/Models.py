@@ -2,11 +2,15 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.urls import reverse
+from rest_framework.response import Response
 
-class Suggestions:
+class Suggestions(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    publishDate = models.DateTimeField('date published')
 
-    def __str__(self):
-        return self.title
+    def auto_complete(self,request):
+        query = Suggestions.objects.filter(title.startswith(request.REQUEST['search']))
+        res = []
+        for result in query:
+            res.append(result.title)
+        return Response(results)
