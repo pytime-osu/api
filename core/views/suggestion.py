@@ -10,5 +10,5 @@ class SuggestionViewSet(viewsets.ViewSet):
     def search(self, request):
         suggestions = Suggestion.objects.filter(
             name__contains=request.query_params.get('search', '')
-        )[:5].values_list('name')
+        )[:5].values_list('name', flat=True)
         return Response([{'label': s, 'value': s} for s in suggestions])
