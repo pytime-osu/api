@@ -16,7 +16,7 @@ def rec_list(request):
         natural_language_query=tags)['results']
     results = []
     for game in games_list:
-        results.append({"name": game['name'], "summary": game['summary'], "cover_url": game['cover']['url'],
+        results.append({"name": game['name'], "summary": game['summary'], "cover": game['cover'],
                         "slug": game['slug']})
 
     return Response(results)
