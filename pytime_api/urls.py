@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from pytime_api import views
 
+from core.urls import core_router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('rec/', views.rec_list),
-    path('detail/', views.game_detail),
 ]
+
+urlpatterns += core_router.urls
