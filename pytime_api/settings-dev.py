@@ -79,12 +79,8 @@ WSGI_APPLICATION = 'pytime_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pytime',
-        'USER': 'doadmin',
-        'PASSWORD': 'f695biw2zhs3mlsn',
-        'HOST': 'api-db-do-user-8165775-0.b.db.ondigitalocean.com',
-        'PORT': '25060',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
