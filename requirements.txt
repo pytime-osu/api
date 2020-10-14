@@ -4,7 +4,7 @@ chardet==3.0.4
 Django==3.1.1
 django-cors-headers==3.5.0
 djangorestframework==3.11.1
-ibm-cloud-sdk-core==3.2.0
+ibm-cloud-sdk-core==1.7.3
 ibm-watson==4.7.1
 idna==2.10
 PyJWT==1.7.1
