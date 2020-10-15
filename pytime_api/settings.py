@@ -25,7 +25,7 @@ SECRET_KEY = '7j1#i$-y+!67(mx9bsi%$00+x4jpf8s4ylwp88py9gpwox-_5h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['api-cpf3f.ondigitalocean.app',]
+ALLOWED_HOSTS = ['api-cpf3f.ondigitalocean.app', ]
 
 
 # Application definition
