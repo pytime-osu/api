@@ -16,9 +16,12 @@ before_script:
 - doctl kubernetes cluster kubeconfig save k8s-1-18-8-do-1-nyc1-1602768384692 -t $DO_TOKEN
 script:
 - docker build -t pytimeapi:$TRAVIS_BUILD_NUMBER .
-- docker tag pytimeapi:$TRAVIS_BUILD_NUMBER registry.digitalocean.com/api/pytimeapi:$TRAVIS_BUILD_NUMBER
-- docker push registry.digitalocean.com/api/pytimeapi:$TRAVIS_BUILD_NUMBER
-- kubectl set image deployment api-dep django:registry.digitalocean.com/api/pytimeapi:$TRAVIS_BUILD_NUMBER
+- docker tag pytimeapi:$TRAVIS_BUILD_NUMBER registry.digitalocean.com/api/main:$TRAVIS_BUILD_NUMBER
+deploy:
+  provider: script
+  script: bash scripts/deploy.sh
+  on:
+    branch: master
 env:
   global:
     secure: "b0oYiQsWNLp213Up5HTCBw24m6tWdPMLPcBKzzUlIuIHO5eRpO0Ijc4Ky/abdVIXIA3n5RN1t37ESbwBBmSQBlXQeZS75FqbTPLF53ZiZaTlC2jAU/ozzD5JncWLiFi6Wjnj0Yiw+sOPiYvpSsFIzDxCYHUsSmeU1SNIqRAfWJMuoyTubf3HN/rqBL8GVZNtmYVsNaHf/inrtI90nzLrHbDwUwzdDwDEKlRpAOdSsILr+tVUW3fsI3AbTSMcYz42d6dpLdE+WoaPV1+rTHS5zNCTlc95UT8Mf8SnfQu+VRTMGDjBB6f8Qg6m4gUaom488ZJXnPPMvLuB387O+s6N/wGQYe7OetH53+qQ9vwPu9uIM/jtBTBYdfhDiUX0bO470uHrjEZzYdmkQAmH3zFYlXRqaKKoSQe8CAp/ZNwCbXRDnLM03xYqwjqHB0lq8I5YiofdCqeB8qtpjc6x5VRxDpNIAZphR/tpxlRZVbHc/V+MqGMMTHyJWP18v2kubwu5tqMet5HjJfj7uu9mnF165HJ3ZdsjYYf7vOG9n1HD8H71PHMuD9DYfEY59D4YGC5E5gaEj/Zgmf6s2XUHNJI4iHgiUawz85A9XYBGB7sa4KjEn8GB89oxUix1nuY0LX3bBsq929sPPSXxZgtWf/iv5gPuDvGuGJBpIWPsTeX2koc="
