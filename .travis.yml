@@ -7,8 +7,10 @@ addons:
   - doctl
 services:
 - docker
-before_install:
-- sudo apt-get install kubectl
+install:
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  - sudo mv ./kubectl /usr/local/bin/kubectl
 before_script:
 - doctl registry login -t $DO_TOKEN
 - doctl kubernetes cluster kubeconfig save k8s-1-18-8-do-1-nyc1-1602768384692 -t $DO_TOKEN
