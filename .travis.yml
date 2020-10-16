@@ -1,0 +1,22 @@
+language: python
+python:
+- '3.8'
+dist: bionic
+addons:
+  snaps:
+  - doctl
+services:
+- docker
+before_install:
+- sudo apt-get install kubectl
+before_script:
+- doctl registry login -t $DO_TOKEN
+- doctl kubernetes cluster kubeconfig save k8s-1-18-8-do-1-nyc1-1602768384692 -t $DO_TOKEN
+script:
+- docker build -t pytimeapi:$TRAVIS_BUILD_NUMBER .
+- docker tag pytimeapi:$TRAVIS_BUILD_NUMBER registry.digitalocean.com/api/pytimeapi:$TRAVIS_BUILD_NUMBER
+- docker push registry.digitalocean.com/api/pytimeapi:$TRAVIS_BUILD_NUMBER
+- kubectl set image deployment api-dep django:registry.digitalocean.com/api/pytimeapi:$TRAVIS_BUILD_NUMBER
+env:
+  global:
+    secure: qa86Nyg6CBp2uQ6qCLLCWk3hgEdTYlnvIZhtZCBXRarr2oI0q2X1pVCMmOqTSaXoLxDpoMjNLnRMkKeafTMV6F9Cunytp9btj5IIJd0Hpl6HhCYQDnpKu131PToDiphag4U1xWPHxaNVTzY2uikMTpnOH/n4xUhe8omZSP9eOr4SB44nkKB0h8T8VmHVkWb7co2A4pzeFqNRxsyA8kk+ktRlf5M4EdMlfvBc7njAjLLGtdyaVVUR7nG1oTOsGa/C7JqUcsQGYnHbHjq/73Gw9XA80SbumjNrpGdpZKGpxAlZcYPCNxYDhq8yf8btNzxztV4881DP3vLsdv0CDGIgKgaK3DBBiqhBlJpefXJL3MCDPlAhE1GTNo/Vje+EpEC9buYw0yVLxPq/98jlVFtFrKDvQKcq+fENiFyueCf/p5T7TDz7RrpHIVKfgFyHA7Yjx26KKFISrydkyFcyoUmrbWF5KQGA0EZ1N91JJMarQaSsFw8M2eaYyQSUoVRYprNYYJBi1fElIuy70J378Nc3xSqcTYNQUBSAJb+lSPNJBL+Lcq34wZvmoRDBVFmi/d3QecBLHuzqUHeV3Zp0rDpMJsd4luiG9zBV/TNNkQNEBh4IQqF60wWH02cVd0inQ+8IHJHVgvewe+obER3HKG9pzYlhqQcEZpYaGKoq3Liv67Q=
