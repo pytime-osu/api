@@ -8,12 +8,12 @@ addons:
 services:
 - docker
 install:
-  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-  - chmod +x ./kubectl
-  - sudo mv ./kubectl /usr/local/bin/kubectl
+- curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+- chmod +x ./kubectl
+- sudo mv ./kubectl /usr/local/bin/kubectl
 before_script:
-- doctl registry login -t $DO_TOKEN
-- doctl kubernetes cluster kubeconfig save k8s-1-18-8-do-1-nyc1-1602768384692 -t $DO_TOKEN
+- doctl registry login
+- doctl kubernetes cluster kubeconfig save k8s-1-18-8-do-1-nyc1-1602768384692
 script:
 - docker build -t pytimeapi:$TRAVIS_BUILD_NUMBER .
 - docker tag pytimeapi:$TRAVIS_BUILD_NUMBER registry.digitalocean.com/api/main:$TRAVIS_BUILD_NUMBER
@@ -24,4 +24,4 @@ deploy:
     branch: master
 env:
   global:
-    secure: "b0oYiQsWNLp213Up5HTCBw24m6tWdPMLPcBKzzUlIuIHO5eRpO0Ijc4Ky/abdVIXIA3n5RN1t37ESbwBBmSQBlXQeZS75FqbTPLF53ZiZaTlC2jAU/ozzD5JncWLiFi6Wjnj0Yiw+sOPiYvpSsFIzDxCYHUsSmeU1SNIqRAfWJMuoyTubf3HN/rqBL8GVZNtmYVsNaHf/inrtI90nzLrHbDwUwzdDwDEKlRpAOdSsILr+tVUW3fsI3AbTSMcYz42d6dpLdE+WoaPV1+rTHS5zNCTlc95UT8Mf8SnfQu+VRTMGDjBB6f8Qg6m4gUaom488ZJXnPPMvLuB387O+s6N/wGQYe7OetH53+qQ9vwPu9uIM/jtBTBYdfhDiUX0bO470uHrjEZzYdmkQAmH3zFYlXRqaKKoSQe8CAp/ZNwCbXRDnLM03xYqwjqHB0lq8I5YiofdCqeB8qtpjc6x5VRxDpNIAZphR/tpxlRZVbHc/V+MqGMMTHyJWP18v2kubwu5tqMet5HjJfj7uu9mnF165HJ3ZdsjYYf7vOG9n1HD8H71PHMuD9DYfEY59D4YGC5E5gaEj/Zgmf6s2XUHNJI4iHgiUawz85A9XYBGB7sa4KjEn8GB89oxUix1nuY0LX3bBsq929sPPSXxZgtWf/iv5gPuDvGuGJBpIWPsTeX2koc="
+    secure: LueMcqtKLSLWIjKjUTcCZNAOUTBBnPvm7733TGmCEUUv0thA1l2gEoS+B1odBWCr4uL3cV50y6UmNbC3gHTbGB/Y9SwwgGGU7HMA/IhruNjM79DEEx+CorbIymBAYgEGGTW3XlCr1Ybb2GEMzkINfKk9Pufs+ZwAqYm9StOmMJ57p20llW8DfTPVglJNFHqnZUsvjMSmUPjb95FeIKNFahbfvxegG0rJ70UEIA07dwHXa6qTgJFV/MbwEe+1GxixANX1F4RL98/PhZNgfwKpcSSGZwyrMx3tycvUB5DFGsMyyxLLiA4XbBoJ9JonHK9jwbh5GOVERcRNSacEvvDKWWVeJlMy3DmBVusMbt5U8v2hL2zuFWvxaduaaAlvyCmfIpFk7fAlXDNHOCNz+cspThQi3BtdsVkz1YsUMIJuUnF3/vLCP726fqKCFK3qHV3I55FwLQMg2gWVFWBiGtqzAXQcIVFkQo5DS/03AhGzTr3ScNwUEvaJZbTxAC+s3DHq04HJYQvzQXY8KgdNI/lC0Mvwxj8DY9RYb8agqN3cM+1I5gNiYeyyyvC52M8vNJBEfeq6er+h+4q/JhwcHwpBswAAP/jJ8iPcCfSWa7n3KVSy1DybnsGv3/KpWYDfGv9cJP+NT8Gnl9kPE8l/YVsQ/pFW+eFgF9YXMscxLdHX8HE=
