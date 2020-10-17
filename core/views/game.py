@@ -13,11 +13,19 @@ class GameViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     @action(detail=False, methods=['POST'])
     def recommendations(self, request):
-        tags = " ".join(request.data['tags'])
+        query = ''
+        for tag in request.data['tags']:
+            query += 'keywords.slug:\"{slug}\"|' \
+                    'summary:\"{slug}\"|' \
+                    'genres.slug:\"{slug}\"|' \
+                    'themes.slug:\"{slug}\"|'.format(slug=tag)
+        # Remove trailing pipe
+        query = query[:len(query) - 1]
+
         games_list = discovery.query(
             collection_id=settings.DISCOVERY_COLLECTION_ID,
             environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
-            natural_language_query=tags)['results']
+            query=query)['results']
         results = []
         for game in games_list:
             results.append({"name": game['name'], "summary": game['summary'], "cover": game['cover'],
