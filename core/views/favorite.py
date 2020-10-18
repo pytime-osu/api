@@ -27,6 +27,7 @@ class FavoriteViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         except:
             return Response(status=400)
 
+    @action(detail=False, methods=['POST'])
     def get_favorites(self, request):
         data = request.data
         username = data['username']
