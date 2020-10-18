@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api-pod
+  labels:
+    app: pytime-api
+spec:
+  containers:
+  - name: django
+    image: registry.digitalocean.com/api/main:latest
+    ports:
+    - containerPort: 8000

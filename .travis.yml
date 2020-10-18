@@ -1,0 +1,27 @@
+language: python
+python:
+- '3.8'
+dist: bionic
+addons:
+  snaps:
+  - doctl
+services:
+- docker
+install:
+- curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+- chmod +x ./kubectl
+- sudo mv ./kubectl /usr/local/bin/kubectl
+before_script:
+- doctl registry login
+- doctl kubernetes cluster kubeconfig save k8s-1-18-8-do-1-nyc1-1602768384692
+script:
+- docker build -t pytimeapi:$TRAVIS_BUILD_NUMBER .
+- docker tag pytimeapi:$TRAVIS_BUILD_NUMBER registry.digitalocean.com/api/main:$TRAVIS_BUILD_NUMBER
+deploy:
+  provider: script
+  script: bash scripts/deploy.sh
+  on:
+    branch: master
+env:
+  global:
+    secure: LueMcqtKLSLWIjKjUTcCZNAOUTBBnPvm7733TGmCEUUv0thA1l2gEoS+B1odBWCr4uL3cV50y6UmNbC3gHTbGB/Y9SwwgGGU7HMA/IhruNjM79DEEx+CorbIymBAYgEGGTW3XlCr1Ybb2GEMzkINfKk9Pufs+ZwAqYm9StOmMJ57p20llW8DfTPVglJNFHqnZUsvjMSmUPjb95FeIKNFahbfvxegG0rJ70UEIA07dwHXa6qTgJFV/MbwEe+1GxixANX1F4RL98/PhZNgfwKpcSSGZwyrMx3tycvUB5DFGsMyyxLLiA4XbBoJ9JonHK9jwbh5GOVERcRNSacEvvDKWWVeJlMy3DmBVusMbt5U8v2hL2zuFWvxaduaaAlvyCmfIpFk7fAlXDNHOCNz+cspThQi3BtdsVkz1YsUMIJuUnF3/vLCP726fqKCFK3qHV3I55FwLQMg2gWVFWBiGtqzAXQcIVFkQo5DS/03AhGzTr3ScNwUEvaJZbTxAC+s3DHq04HJYQvzQXY8KgdNI/lC0Mvwxj8DY9RYb8agqN3cM+1I5gNiYeyyyvC52M8vNJBEfeq6er+h+4q/JhwcHwpBswAAP/jJ8iPcCfSWa7n3KVSy1DybnsGv3/KpWYDfGv9cJP+NT8Gnl9kPE8l/YVsQ/pFW+eFgF9YXMscxLdHX8HE=

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-dep
+  labels:
+    app: pytime-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pytime-api
+  template:
+    metadata:
+      labels:
+        app: pytime-api
+    spec:
+      containers:
+      - name: django
+        image: registry.digitalocean.com/api/main:latest
+        ports:
+        - containerPort: 8000
