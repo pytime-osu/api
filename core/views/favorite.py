@@ -4,6 +4,9 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from authentication.models import CustomUser
 from core.models import Favorite
+from discovery import DiscoveryClient
+
+discovery = DiscoveryClient()
 
 
 class FavoriteViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
@@ -24,3 +27,21 @@ class FavoriteViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         except:
             return Response(status=400)
 
+    def get_favorites(self, request):
+        data = request.data
+        username = data['username']
+        favorites = CustomUser.objects.filter(username=username).values()
+        games = []
+        for entry in list(favorites):
+            slug = entry['slug']
+            query = "slug::\"{unique}\"".format(unique=slug)
+
+            game = discovery.query(
+                collection_id=settings.DISCOVERY_COLLECTION_ID,
+                environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
+                query=query)['results']
+
+            games.append({"name": game['name'], "summary": game['summary'], "cover": game['cover'],
+                          "slug": game['slug']})
+
+        return Response(games)
