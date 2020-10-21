@@ -8,7 +8,6 @@ def tib():
     dc = DiscoveryClient()
     vision_client = vision.ImageAnnotatorClient()
     games = dc.all_documents()
-    games = games[0:5]
     for game in games:
         for image in game.get('screenshots', []):
             image_id = image['image_id']
@@ -19,5 +18,7 @@ def tib():
                 web_detection = vision_client.web_detection(image=img).web_detection
                 labels = web_detection.web_entities
                 for label in labels:
-                    ImageTag.objects.create(game=game['slug'], image_id=image_id, tag=label.description.lower())
+                    desc = label.description.lower()
+                    if desc is not None and desc != '':
+                        ImageTag.objects.create(game=game['slug'], image=image_id, tag=label.description.lower())
         print(f"Processed {game['name']}")
