@@ -55,4 +55,13 @@ class DiscoveryClient:
             natural_language_query=natural_language_query,
             query=query).get_result()
 
+    def all_documents(self):
+        games = []
+        for i in range(10):
+            games.extend(self.client.query(
+                count=100,
+                environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
+                collection_id=settings.DISCOVERY_COLLECTION_ID
+            ).get_result()['results'])
+        return games
 
