@@ -1,4 +1,10 @@
 # BUILD DEPENDENCIES
+ARG DISCOVERY_API_KEY
+ARG DISCOVERY_SERVICE_URL
+ARG DISCOVERY_COLLECTION_ID
+ARG DISCOVERY_ENVIRONMENT_ID
+ARG TWITCH_CLIENT_ID
+ARG TWITCH_CLIENT_SECRET
 
 FROM python:3.8-alpine as builder
 # set work directory
@@ -12,7 +18,7 @@ ENV PYTHONUNBUFFERED 1
 COPY ./requirements.txt /usr/src/app/requirements.txt
 RUN set -ex \
     && apk update \
-    && apk add --no-cache postgresql-libs \
+    && apk add --no-cache postgresql-libs linux-headers \
     && apk add --no-cache gcc musl-dev build-base python3-dev postgresql-dev  \
     && pip install --upgrade pip \
     && pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
@@ -30,6 +36,14 @@ RUN mkdir -p /home/app
 
 # create the app user
 RUN addgroup -S app && adduser -S app -G app
+
+# create env variables for application
+ENV DISCOVERY_API_KEY=$DISCOVERY_API_KEY
+ENV DISCOVERY_SERVICE_URL=$DISCOVERY_SERVICE_URL
+ENV DISCOVERY_COLLECTION_ID=$DISCOVERY_COLLECTION_ID
+ENV DISCOVERY_ENVIRONMENT_ID=$DISCOVERY_ENVIRONMENT_ID
+ENV TWITCH_CLIENT_ID=$TWITCH_CLIENT_ID
+ENV TWITCH_CLIENT_SECRET=$TWITCH_CLIENT_SECRET
 
 # create the appropriate directories
 ENV HOME=/home/app
