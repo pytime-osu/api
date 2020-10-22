@@ -15,6 +15,7 @@ class FavoriteViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     def add_favorite(self, request):
         try:
             data = request.data
+            print(data)
             username = data['username']
             user = CustomUser.objects.get(username=username)
             slug = data['slug']
@@ -31,18 +32,20 @@ class FavoriteViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     def get_favorites(self, request):
         data = request.data
         username = data['username']
-        favorites = CustomUser.objects.filter(username=username).values()
+        user = CustomUser.objects.get(username=username)
+        favorites = Favorite.objects.filter(user=user).values()
         games = []
         for entry in list(favorites):
             slug = entry['slug']
             query = "slug::\"{unique}\"".format(unique=slug)
 
-            game = discovery.query(
+            games_list = discovery.query(
                 collection_id=settings.DISCOVERY_COLLECTION_ID,
                 environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
                 query=query)['results']
 
-            games.append({"name": game['name'], "summary": game['summary'], "cover": game['cover'],
-                          "slug": game['slug']})
+            for game in games_list:
+                games.append({"name": game['name'], "summary": game['summary'], "cover": game['cover'],
+                                "slug": game['slug']})
 
         return Response(games)
