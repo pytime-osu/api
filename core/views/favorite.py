@@ -46,6 +46,6 @@ class FavoriteViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
             for game in games_list:
                 games.append({"name": game['name'], "summary": game['summary'], "cover": game['cover'],
-                                "slug": game['slug']})
+                              "slug": game['slug']})
 
         return Response(games)
