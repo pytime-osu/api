@@ -13,20 +13,18 @@ class FavoriteViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 
     @action(detail=False, methods=['POST'])
     def add_favorite(self, request):
-        try:
-            data = request.data
-            print(data)
-            username = data['username']
-            user = CustomUser.objects.get(username=username)
-            slug = data['slug']
+        data = request.data
+        username = data['username']
+        user = CustomUser.objects.get(username=username)
+        slug = data['slug']
+        if Favorite.objects.filter(user=user, slug=slug).exists():
+            return Response(status=400)
 
+        else:
             new_entry = Favorite(user=user, slug=slug)
             new_entry.save()
-
             return Response(status=201)
 
-        except:
-            return Response(status=400)
 
     @action(detail=False, methods=['POST'])
     def get_favorites(self, request):
@@ -49,3 +47,15 @@ class FavoriteViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
                               "slug": game['slug']})
 
         return Response(games)
+
+    @action(detail=False, methods=['POST'])
+    def remove_favorite(self, request):
+        data = request.data
+        username = data['username']
+        user = CustomUser.objects.get(username=username)
+        slug = data['slug']
+        if (Favorite.objects.filter(user=user, slug=slug).delete())[0] == 1:
+            return Response(status=201)
+
+        else:
+            return Response(status=400)

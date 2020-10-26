@@ -14,3 +14,7 @@ class ImageTag(models.Model):
 class Favorite(models.Model):
     user = models.ForeignKey('authentication.CustomUser', on_delete=models.CASCADE)
     slug = models.CharField(max_length=100)
+
+    class Meta:
+        unique_together = ('user', 'slug')
+
