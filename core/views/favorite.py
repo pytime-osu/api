@@ -25,7 +25,6 @@ class FavoriteViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
             new_entry.save()
             return Response(status=201)
 
-
     @action(detail=False, methods=['POST'])
     def get_favorites(self, request):
         data = request.data
