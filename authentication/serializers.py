@@ -11,9 +11,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    """
-    Currently unused in preference of the below.
-    """
     email = serializers.EmailField(
         required=True
     )

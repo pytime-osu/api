@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from authentication.models import CustomUser
 from core.models import Favorite
 from discovery import DiscoveryClient
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 discovery = DiscoveryClient()
 
