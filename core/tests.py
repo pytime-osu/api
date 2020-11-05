@@ -90,6 +90,30 @@ class FavoriteAPI(TestCase):
         response = view(request)
         self.assertEqual(response.status_code, 400)
 
+    def test_is_favorite_success(self):
+        valid_paylod = {
+            'username': 'test',
+            'slug': 'the-witcher-3-wild-hunt'
+        }
+        factory = APIRequestFactory()
+        request_url = '/favorites/is_favorite'
+        view = FavoriteViewSet.as_view({'post': 'is_favorite'})
+        request = factory.post(request_url, valid_paylod, format='json')
+        response = view(request)
+        self.assertEqual(response.data['is_favorite'], 'true')
+
+    def test_is_not_favorite(self):
+        valid_paylod = {
+            'username': 'test',
+            'slug': 'invalid'
+        }
+        factory = APIRequestFactory()
+        request_url = '/favorites/is_favorite'
+        view = FavoriteViewSet.as_view({'post': 'is_favorite'})
+        request = factory.post(request_url, valid_paylod, format='json')
+        response = view(request)
+        self.assertEqual(response.data['is_favorite'], 'false')
+
 
 class GameAPI(TestCase):
     def test_retrieve(self):
