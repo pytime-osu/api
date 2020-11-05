@@ -100,7 +100,7 @@ class FavoriteAPI(TestCase):
         view = FavoriteViewSet.as_view({'post': 'is_favorite'})
         request = factory.post(request_url, valid_paylod, format='json')
         response = view(request)
-        self.assertEqual(response.data['is_favorite'], 'true')
+        self.assertTrue(response.data['is_favorite'])
 
     def test_is_not_favorite(self):
         valid_paylod = {
@@ -112,7 +112,7 @@ class FavoriteAPI(TestCase):
         view = FavoriteViewSet.as_view({'post': 'is_favorite'})
         request = factory.post(request_url, valid_paylod, format='json')
         response = view(request)
-        self.assertEqual(response.data['is_favorite'], 'false')
+        self.assertFalse(response.data['is_favorite'])
 
 
 class GameAPI(TestCase):
