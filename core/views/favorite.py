@@ -32,10 +32,10 @@ class FavoriteViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         user = CustomUser.objects.get(username=username)
         slug = data['slug']
         if Favorite.objects.filter(user=user, slug=slug).exists():
-            return Response({'is_favorite': 'true'})
+            return Response({'is_favorite': True})
 
         else:
-            return Response({'is_favorite': 'false'})
+            return Response({'is_favorite': False})
 
     @action(detail=False, methods=['POST'])
     def get_favorites(self, request):
