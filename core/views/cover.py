@@ -14,3 +14,4 @@ class CoverSerializer(serializers.ModelSerializer):
 class CoverViewSet(viewsets.ModelViewSet):
     queryset = Cover.objects.all()
     serializer_class = CoverSerializer
+    filterset_fields = ['game']
