@@ -1,6 +1,4 @@
-from rest_framework import viewsets, status, serializers
-from rest_framework.decorators import action
-from rest_framework.response import Response
+from rest_framework import viewsets, serializers
 
 from core.models import Cover
 
