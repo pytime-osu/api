@@ -10,7 +10,7 @@ from igdb import IGDBClient
 
 
 # Keeping old suggestion stuff for now so it can be updated later
-def load_shows(total=1000):
+def load_shows(total=20):
     tmdb = TMDBClient()
     discovery = DiscoveryClient()
     # Suggestion.objects.all().delete()
