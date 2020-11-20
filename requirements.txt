@@ -26,3 +26,4 @@ typing-extensions==3.7.4.3
 typing-inspect==0.6.0
 urllib3==1.25.11
 websocket-client==0.48.0
+tmdbsimple==2.6.6
