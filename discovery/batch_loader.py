@@ -6,7 +6,6 @@ from django.conf import settings
 from core.models import Suggestion
 from discovery import DiscoveryClient
 from tmdb import TMDBClient
-from igdb import IGDBClient
 
 
 # Keeping old suggestion stuff for now so it can be updated later
