@@ -16,7 +16,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ SECRET_KEY = '7j1#i$-y+!67(mx9bsi%$00+x4jpf8s4ylwp88py9gpwox-_5h'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -76,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pytime_api.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -86,15 +83,15 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-#Autorization Settings
+# Autorization Settings
 
 REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': (
     #     'rest_framework.permissions.IsAuthenticated',
     # ),
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-# 'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ),
+    #     'DEFAULT_AUTHENTICATION_CLASSES': (
+    # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+    #     ),
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
@@ -112,7 +109,6 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -148,7 +144,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -165,10 +160,13 @@ CORS_ALLOWED_ORIGINS = [
 DISCOVERY_API_KEY = os.environ.get('DISCOVERY_API_KEY')
 DISCOVERY_SERVICE_URL = os.environ.get('DISCOVERY_SERVICE_URL')
 DISCOVERY_ENVIRONMENT = 'dev'
-DISCOVERY_COLLECTION = 'games'
+DISCOVERY_COLLECTION = 'shows'
 DISCOVERY_COLLECTION_ID = os.environ.get('DISCOVERY_COLLECTION_ID')
 DISCOVERY_ENVIRONMENT_ID = os.environ.get('DISCOVERY_ENVIRONMENT_ID')
 
 # TWITCH
 TWITCH_CLIENT_ID = os.environ.get('TWITCH_CLIENT_ID')
 TWITCH_CLIENT_SECRET = os.environ.get('TWITCH_CLIENT_SECRET')
+
+# TMDB
+TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
