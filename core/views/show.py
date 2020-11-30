@@ -33,7 +33,7 @@ class ShowViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
             query=query)['results']
         results = []
         for show in shows_list:
-            results.append({"slug": show['name'], "summary": show['overview'], "cover": show['poster_path]']})
+            results.append({"slug": show['name'], "summary": show['overview'], "cover": show['poster_path']})
         return Response(results)
 
     # TODO: Update to work with TV Shows
