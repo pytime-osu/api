@@ -43,21 +43,20 @@ class FavoriteViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         username = data['username']
         user = CustomUser.objects.get(username=username)
         favorites = Favorite.objects.filter(user=user).values()
-        games = []
+        shows = []
         for entry in list(favorites):
             slug = entry['slug']
-            query = "slug::\"{unique}\"".format(unique=slug)
+            query = "name::\"{unique}\"".format(unique=slug)
 
-            games_list = discovery.query(
+            shows_list = discovery.query(
                 collection_id=settings.DISCOVERY_COLLECTION_ID,
                 environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
                 query=query)['results']
 
-            for game in games_list:
-                games.append({"name": game['name'], "summary": game['summary'], "cover": game['cover'],
-                              "slug": game['slug']})
+            for show in shows_list:
+                shows.append({"name": show['name'], "summary": show['overview'], "cover": show['poster_path']})
 
-        return Response(games)
+        return Response(shows)
 
     @action(detail=False, methods=['POST'])
     def remove_favorite(self, request):

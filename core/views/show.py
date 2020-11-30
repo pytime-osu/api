@@ -12,30 +12,31 @@ from discovery import DiscoveryClient
 discovery = DiscoveryClient()
 
 
-class GameViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    lookup_field = 'slug'
+class ShowViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    lookup_field = 'name'
 
     @action(detail=False, methods=['POST'])
     def recommendations(self, request):
         query = ''
         for tag in request.data['tags']:
-            query += f'keywords.slug:\"{tag}\"|' \
-                    f'summary:\"{tag}\"|' \
-                    f'genres.slug:\"{tag}\"|' \
-                    f'themes.slug:\"{tag}\"|'
+            query += f'genres.name:\"{tag}\"|' \
+                    f'overview:\"{tag}\"|' \
+                    f'created_by.name:\"{tag}\"|' \
+                    f'production_companies.name:\"{tag}\"|' \
+                    f'networks.name:\"{tag}\"|'
         # Remove trailing pipe
         query = query[:len(query) - 1]
 
-        games_list = discovery.query(
+        shows_list = discovery.query(
             collection_id=settings.DISCOVERY_COLLECTION_ID,
             environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
             query=query)['results']
         results = []
-        for game in games_list:
-            results.append({"name": game['name'], "summary": game['summary'], "cover": game['cover'],
-                            "slug": game['slug']})
+        for show in shows_list:
+            results.append({"slug": show['name'], "summary": show['overview'], "cover": show['poster_path]']})
         return Response(results)
 
+    # TODO: Update to work with TV Shows
     @action(detail=False, methods=['POST'])
     def cover_art(self, request):
         game_slugs = request.data.get('games', [])
@@ -45,9 +46,9 @@ class GameViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         scores = tags.values('game', 'image').annotate(score=Count('tag')).order_by('-score')
         return Response(data=scores)
 
-    def retrieve(self, request, slug=None, **kwargs):
-        game = discovery.query(
+    def retrieve(self, request, name=None, **kwargs):
+        show = discovery.query(
             collection_id=settings.DISCOVERY_COLLECTION_ID,
             environment_id=settings.DISCOVERY_ENVIRONMENT_ID,
-            filter="slug::" + slug)['results'][0]
-        return Response(game)
+            filter="name::" + name)['results'][0]
+        return Response(show)

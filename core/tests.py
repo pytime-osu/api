@@ -4,7 +4,7 @@ from authentication.models import CustomUser
 from core.models import Suggestion
 from rest_framework.test import APIRequestFactory
 from core.views.favorite import FavoriteViewSet
-from core.views.game import GameViewSet
+from core.views.show import GameViewSet
 from core.views.suggestion import SuggestionViewSet
 
 
